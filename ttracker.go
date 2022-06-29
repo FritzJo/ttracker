@@ -64,6 +64,11 @@ func calcOvertime(workStart string, workEnd string) int {
 }
 
 func main() {
+	if len(os.Args) <= 1 {
+		log.Fatal("Please provide an argument!")
+	}
+
+	// Read existing CSV data
 	f, err := os.Open("data.csv")
 	if err != nil {
 		log.Fatal(err)
@@ -78,14 +83,19 @@ func main() {
 		log.Fatal(err)
 	}
 
+	// Parse and print records
 	recordList := readRecords(data)
-
 	fmt.Println("\n")
 	fmt.Printf("%+v\n", recordList)
 	fmt.Println(len(recordList))
 
-	rec := clockIn()
-	rec = clockOut(rec)
+	var rec TimeRecord
+	switch os.Args[1] {
+	case "in":
+		rec = clockIn()
+	case "out":
+		rec = clockOut(rec)
+	}
 	fmt.Println(rec)
 	//fmt.Println(calcOvertime("7:55","16:15"))
 }
