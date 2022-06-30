@@ -60,7 +60,6 @@ func calcOvertime(workStart string, workEnd string) int {
 	endMinute, _ := strconv.Atoi(strings.Split(workEnd, ":")[1])
 
 	return (endHour*60 + endMinute) - (startHour*60 + startMinute) - (7 * 60) - (60)
-
 }
 
 func main() {
@@ -85,17 +84,18 @@ func main() {
 
 	// Parse and print records
 	recordList := readRecords(data)
-	fmt.Println("\n")
-	fmt.Printf("%+v\n", recordList)
-	fmt.Println(len(recordList))
 
 	var rec TimeRecord
 	switch os.Args[1] {
 	case "in":
 		rec = clockIn()
 	case "out":
-		rec = clockOut(rec)
+		lastRecord := recordList[len(recordList)-1]
+		if lastRecord.WorkEnd == "" {
+			rec = clockOut(lastRecord)
+		} else {
+			fmt.Println("Can't clock out, because there is currently no open time record!")
+		}
 	}
 	fmt.Println(rec)
-	//fmt.Println(calcOvertime("7:55","16:15"))
 }
