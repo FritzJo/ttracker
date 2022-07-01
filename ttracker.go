@@ -68,7 +68,8 @@ func main() {
 	}
 
 	// Read existing CSV data
-	f, err := os.Open("data.csv")
+	f, err := os.OpenFile("data.csv", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0644)
+
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -83,19 +84,50 @@ func main() {
 	}
 
 	// Parse and print records
+	fmt.Println("Reading existing records")
 	recordList := readRecords(data)
+	fmt.Println()
+
+	// Write file for new records
+	fw, err := os.Create("data.csv")
+	csvWriter := csv.NewWriter(fw)
+	csvWriter.Comma = ';'
+	defer csvWriter.Flush()
 
 	var rec TimeRecord
 	switch os.Args[1] {
 	case "in":
+		fmt.Println("Clocking in")
 		rec = clockIn()
+		recordList = append(recordList, rec)
 	case "out":
+		fmt.Println("Clocking out")
 		lastRecord := recordList[len(recordList)-1]
 		if lastRecord.WorkEnd == "" {
 			rec = clockOut(lastRecord)
+			recordList = recordList[:len(recordList)-1]
+			recordList = append(recordList, rec)
 		} else {
 			fmt.Println("Can't clock out, because there is currently no open time record!")
 		}
 	}
-	fmt.Println(rec)
+
+	// Write csv headers
+	csvWriter.Write([]string{"date", "start", "end", "overtime"})
+	// Writing data to csv
+	for _, record := range recordList {
+		e := csvWriter.Write([]string{
+			record.Date.Format("2006-01-02"),
+			record.WorkStart,
+			record.WorkEnd,
+			strconv.Itoa(record.MinutesOvertime)})
+		if e != nil {
+			fmt.Println(e)
+		}
+		if err := csvWriter.Error(); err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	fmt.Println("Done")
 }
