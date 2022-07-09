@@ -14,7 +14,15 @@ go build *.go
 ```
 
 ## Features
-* Clock-in / Clock-out
-* CSV based storage
-* One file for each year
-* Summary of hours worked overtime
+- [x] Clock-in / Clock-out
+- [x] CSV based storage
+- [ ] One file for each year
+- [ ] Summary of hours worked overtime
+
+## Process / Workflow
+### Clock-In / Starting a work day
+![alt text](doc/images/ttracker_process_clockin.drawio.png "Clock-In process")
+
+
+### Clock-Out / Ending a work day
+![alt text](doc/images/ttracker_process_clockout.drawio.png "Clock-Out process")
