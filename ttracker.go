@@ -67,8 +67,9 @@ func main() {
 		log.Fatal("Please provide an argument!")
 	}
 
+	recordFileName := strconv.Itoa(time.Now().Year()) + "_data.csv"
 	// Read existing CSV data
-	f, err := os.OpenFile("data.csv", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0644)
+	f, err := os.OpenFile(recordFileName, os.O_CREATE|os.O_RDWR|os.O_APPEND, 0644)
 
 	if err != nil {
 		log.Fatal(err)
@@ -89,7 +90,7 @@ func main() {
 	fmt.Println()
 
 	// Write file for new records
-	fw, err := os.Create("data.csv")
+	fw, err := os.Create(recordFileName)
 	csvWriter := csv.NewWriter(fw)
 	csvWriter.Comma = ';'
 	defer csvWriter.Flush()
