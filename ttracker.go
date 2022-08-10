@@ -111,6 +111,14 @@ func main() {
 		} else {
 			fmt.Println("Can't clock out, because there is currently no open time record!")
 		}
+	case "summary":
+		fmt.Println("Creating summary")
+		currentOvertimeAmount := 0
+		for _, record := range recordList {
+			fmt.Println(record.MinutesOvertime)
+			currentOvertimeAmount += record.MinutesOvertime
+		}
+		fmt.Println("\n=> " + strconv.Itoa(currentOvertimeAmount))
 	}
 
 	// Write csv headers

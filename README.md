@@ -16,7 +16,7 @@ go build *.go
 ## Features
 - [x] Clock-in / Clock-out
 - [x] CSV based storage
-- [ ] One file for each year
+- [x] One file for each year
 - [ ] Summary of hours worked overtime
 
 ## Process / Workflow
