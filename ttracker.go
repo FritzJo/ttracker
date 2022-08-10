@@ -91,6 +91,9 @@ func main() {
 
 	// Write file for new records
 	fw, err := os.Create(recordFileName)
+	if err != nil {
+		log.Fatal(err)
+	}
 	csvWriter := csv.NewWriter(fw)
 	csvWriter.Comma = ';'
 	defer csvWriter.Flush()
@@ -122,7 +125,11 @@ func main() {
 	}
 
 	// Write csv headers
-	csvWriter.Write([]string{"date", "start", "end", "overtime"})
+	err = csvWriter.Write([]string{"date", "start", "end", "overtime"})
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	// Writing data to csv
 	for _, record := range recordList {
 		e := csvWriter.Write([]string{

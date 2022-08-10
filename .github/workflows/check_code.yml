@@ -1,36 +1,22 @@
-name: Overleaf Sync - Clone Thesis
+name: Build pipeline
 on:
   workflow_dispatch:
 
 jobs:
-  audit:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Set up Go
         uses: actions/setup-go@v3
         with:
-          go-version: '1.16.1' # The Go version to download (if necessary) and use.
-          check-latest: true
-          cache: true
+          go-version: '1.16.1'
 
       - name: Run go vet
         run: go vet *.go
 
-      - name: Install staticcheck
-        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+      - name: Run tests
+        run: go test -race -vet=off
 
-      - name: Run staticcheck
-        run: staticcheck *.go
-
-      - name: Install golint
-        run: go install golang.org/x/lint/golint@latest
-
-      - name: Run golint
-        run: golint *.go
-
-  compile:
-    runs-on: ubuntu-latest
-    steps:
       - name: Build application
-        run: make build
+        run: go build -o bin/ttracker *.go
