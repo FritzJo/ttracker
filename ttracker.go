@@ -11,6 +11,7 @@ import (
 )
 
 type TimeRecord struct {
+	RecordType      string
 	Date            time.Time
 	WorkStart       string
 	WorkEnd         string
@@ -23,10 +24,11 @@ func readRecords(data [][]string) []TimeRecord {
 		if i > 0 {
 			var record TimeRecord
 			fmt.Println(line)
-			record.Date, _ = time.Parse("2006-01-02", line[0])
-			record.WorkStart = line[1]
-			record.WorkEnd = line[2]
-			record.MinutesOvertime, _ = strconv.Atoi(line[3])
+			record.RecordType = line[0]
+			record.Date, _ = time.Parse("2006-01-02", line[1])
+			record.WorkStart = line[2]
+			record.WorkEnd = line[3]
+			record.MinutesOvertime, _ = strconv.Atoi(line[4])
 			timeRecords = append(timeRecords, record)
 		}
 	}
@@ -36,6 +38,7 @@ func readRecords(data [][]string) []TimeRecord {
 func clockIn() TimeRecord {
 	var newRecord TimeRecord
 	t := time.Now()
+	newRecord.RecordType = "R"
 	newRecord.Date, _ = time.Parse("2006-01-02", t.Format("2006-01-02"))
 	hours, minutes, _ := time.Now().Clock()
 	newRecord.WorkStart = fmt.Sprintf("%d:%02d", hours, minutes)
@@ -122,10 +125,13 @@ func main() {
 			currentOvertimeAmount += record.MinutesOvertime
 		}
 		fmt.Println("\n=> " + strconv.Itoa(currentOvertimeAmount))
+	case "take":
+		fmt.Println("Taking time off")
+
 	}
 
 	// Write csv headers
-	err = csvWriter.Write([]string{"date", "start", "end", "overtime"})
+	err = csvWriter.Write([]string{"type", "date", "start", "end", "overtime"})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -133,6 +139,7 @@ func main() {
 	// Writing data to csv
 	for _, record := range recordList {
 		e := csvWriter.Write([]string{
+			record.RecordType,
 			record.Date.Format("2006-01-02"),
 			record.WorkStart,
 			record.WorkEnd,
