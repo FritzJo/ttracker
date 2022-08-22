@@ -2,6 +2,21 @@
 ## What is ttracker
 Simple CLI to track your work hours
 
+# Usage
+```
+# Starting a work day
+./ttracker in
+
+# Ending a work day
+./ttracker out
+
+# Taking some time off
+./ttracker take <Time in Minutes>
+
+# Show summary of currently available overtime minutes
+./ttracker summary
+```
+
 ## Build
 ### Dependencies
 * Golang 1.18
@@ -17,7 +32,12 @@ go build *.go
 - [x] Clock-in / Clock-out
 - [x] CSV based storage
 - [x] One file for each year
-- [ ] Summary of hours worked overtime
+- [x] Summary of hours worked overtime
+- [x] Taking time off
+- [ ] Configuration of default work hours
+- [ ] Colored output
+- [ ] CSV validation
+- [ ] Code quality and error handling
 
 ## Process / Workflow
 ### Clock-In / Starting a work day

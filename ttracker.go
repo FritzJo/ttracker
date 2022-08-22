@@ -111,6 +111,7 @@ func main() {
 		fmt.Println("Clocking out")
 		lastRecord := recordList[len(recordList)-1]
 		if lastRecord.WorkEnd == "" {
+			// TODO: This doesnt check for record type R yet!
 			rec = clockOut(lastRecord)
 			recordList = recordList[:len(recordList)-1]
 			recordList = append(recordList, rec)
@@ -126,8 +127,12 @@ func main() {
 		}
 		fmt.Println("\n=> " + strconv.Itoa(currentOvertimeAmount))
 	case "take":
-		fmt.Println("Taking time off")
-
+		fmt.Println("Taking time off: " + os.Args[2])
+		var offRecord TimeRecord
+		offRecord.RecordType = "O"
+		offtime, _ := strconv.Atoi(os.Args[2])
+		offRecord.MinutesOvertime = -1 * offtime
+		recordList = append(recordList, offRecord)
 	}
 
 	// Write csv headers
