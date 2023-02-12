@@ -28,7 +28,6 @@ func Out(recordList []TimeRecord) []TimeRecord {
 	return recordList
 }
 
-
 func Summary(recordList []TimeRecord) []TimeRecord {
 	fmt.Println("Creating summary")
 	currentOvertimeAmount := 0

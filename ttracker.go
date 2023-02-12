@@ -1,12 +1,12 @@
 package main
 
 import (
+	m "example.com/ttracker/modules"
 	"fmt"
+	"log"
+	"os"
 	"strconv"
 	"time"
-	"os"
-	"log"
-	m "example.com/ttracker/modules"
 )
 
 func main() {
@@ -20,8 +20,6 @@ func main() {
 	fmt.Println("Reading existing records")
 	recordList := m.ReadRecords(recordFileName)
 	fmt.Println()
-
-
 
 	switch os.Args[1] {
 	case "in":

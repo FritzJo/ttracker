@@ -1,13 +1,13 @@
 package modules
 
 import (
-	"strings"
-	"strconv"
-	"log"
-	"fmt"
-	"time"
-	"os"
 	"encoding/csv"
+	"fmt"
+	"log"
+	"os"
+	"strconv"
+	"strings"
+	"time"
 )
 
 func ReadRecords(recordFileName string) []TimeRecord {
@@ -53,7 +53,6 @@ func WriteRecords(recordFileName string, recordList []TimeRecord) {
 	csvWriter.Comma = ';'
 	defer csvWriter.Flush()
 
-
 	// Write csv headers
 	err = csvWriter.Write([]string{"type", "date", "start", "end", "overtime"})
 	if err != nil {
@@ -76,7 +75,6 @@ func WriteRecords(recordFileName string, recordList []TimeRecord) {
 		}
 	}
 }
-
 
 func CalcOvertime(workStart string, workEnd string) int {
 	startHour, _ := strconv.Atoi(strings.Split(workStart, ":")[0])

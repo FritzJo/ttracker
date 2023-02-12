@@ -1,8 +1,8 @@
 package main
 
 import (
-	"testing"
 	m "example.com/ttracker/modules"
+	"testing"
 )
 
 func TestCalcOvertime1(t *testing.T) {
