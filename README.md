@@ -38,3 +38,7 @@ go build *.go
 - [ ] Colored output
 - [ ] CSV validation
 - [ ] Code quality and error handling
+
+## FAQ
+### Does this tool handle different working hours for individual days?
+* No

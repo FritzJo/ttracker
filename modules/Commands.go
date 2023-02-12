@@ -30,12 +30,13 @@ func Out(recordList []TimeRecord) []TimeRecord {
 
 func Summary(recordList []TimeRecord) []TimeRecord {
 	fmt.Println("Creating summary")
-	currentOvertimeAmount := 0
+	currentOvertimeAmount := LoadConfig("config.json").InitialOvertime
+	fmt.Println("Initial overtime: " + strconv.Itoa(currentOvertimeAmount) + " min")
 	for _, record := range recordList {
-		fmt.Println(record.MinutesOvertime)
+		fmt.Println(record.Date.Format("2006-01-02") + " -> " + strconv.Itoa(record.MinutesOvertime) + " min")
 		currentOvertimeAmount += record.MinutesOvertime
 	}
-	fmt.Println("\n=> " + strconv.Itoa(currentOvertimeAmount))
+	fmt.Println("\n=> " + strconv.Itoa(currentOvertimeAmount) + " min")
 	return recordList
 }
 

@@ -82,5 +82,5 @@ func CalcOvertime(workStart string, workEnd string) int {
 	endHour, _ := strconv.Atoi(strings.Split(workEnd, ":")[0])
 	endMinute, _ := strconv.Atoi(strings.Split(workEnd, ":")[1])
 
-	return (endHour*60 + endMinute) - (startHour*60 + startMinute) - (7 * 60) - (60)
+	return (endHour*60 + endMinute) - (startHour*60 + startMinute) - (LoadConfig("config.json").DefaultWorkingHours * 60) - (60)
 }

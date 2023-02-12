@@ -1,12 +1,13 @@
 package main
 
 import (
-	m "example.com/ttracker/modules"
 	"fmt"
 	"log"
 	"os"
 	"strconv"
 	"time"
+
+	m "example.com/ttracker/modules"
 )
 
 func main() {
