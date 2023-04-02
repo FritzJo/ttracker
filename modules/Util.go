@@ -18,7 +18,12 @@ func ReadRecords(recordFileName string) []TimeRecord {
 		log.Fatal(err)
 	}
 
-	defer f.Close()
+	defer func(f *os.File) {
+		err := f.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}(f)
 
 	csvReader := csv.NewReader(f)
 	csvReader.Comma = ';'

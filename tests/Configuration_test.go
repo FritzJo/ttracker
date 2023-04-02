@@ -3,6 +3,7 @@ package modules
 import (
 	m "example.com/ttracker/modules"
 	"io/ioutil"
+	"log"
 	"os"
 	"testing"
 )
@@ -17,7 +18,12 @@ func TestLoadConfig(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.Remove(tmpfile.Name()) // clean up
+	defer func(name string) {
+		err := os.Remove(name)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}(tmpfile.Name()) // clean up
 	if _, err := tmpfile.Write([]byte(testConfig)); err != nil {
 		t.Fatal(err)
 	}
