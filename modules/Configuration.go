@@ -18,7 +18,7 @@ func LoadConfig(configPath string) Configuration {
 	Conf := Configuration{}
 	err := decoder.Decode(&Conf)
 	if err != nil {
-		fmt.Println("Error, couldnt read configuration: ", err)
+		fmt.Println("Error, couldn't read configuration: ", err)
 	}
 	return Conf
 }

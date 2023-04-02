@@ -1,4 +1,4 @@
-package main
+package main_test
 
 import (
 	m "example.com/ttracker/modules"
@@ -12,7 +12,7 @@ func TestCalcOvertime1(t *testing.T) {
 	output := m.CalcOvertime(workStart, workEnd)
 
 	if expectedOutput != output {
-		t.Errorf("Failed ! got %v want %c", output, expectedOutput)
+		t.Errorf("Failed ! got %v want %b", output, expectedOutput)
 	} else {
 		t.Logf("Success !")
 	}

@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func clockIn() TimeRecord {
+func ClockIn() TimeRecord {
 	var newRecord TimeRecord
 	t := time.Now()
 	newRecord.RecordType = "R"
@@ -18,7 +18,7 @@ func clockIn() TimeRecord {
 	return newRecord
 }
 
-func clockOut(openRecord TimeRecord) TimeRecord {
+func ClockOut(openRecord TimeRecord) TimeRecord {
 	hours, minutes, _ := time.Now().Clock()
 	openRecord.WorkEnd = fmt.Sprintf("%d:%02d", hours, minutes)
 	openRecord.MinutesOvertime = CalcOvertime(openRecord.WorkStart, openRecord.WorkEnd)

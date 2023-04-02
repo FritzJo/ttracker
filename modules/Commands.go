@@ -8,7 +8,7 @@ import (
 
 func In(recordList []TimeRecord) []TimeRecord {
 	fmt.Println("Clocking in")
-	rec := clockIn()
+	rec := ClockIn()
 	recordList = append(recordList, rec)
 	return recordList
 }
@@ -18,7 +18,7 @@ func Out(recordList []TimeRecord) []TimeRecord {
 	lastRecord := recordList[len(recordList)-1]
 	if lastRecord.WorkEnd == "" {
 		// TODO: This doesnt check for record type R yet!
-		rec := clockOut(lastRecord)
+		rec := ClockOut(lastRecord)
 		recordList = recordList[:len(recordList)-1]
 		recordList = append(recordList, rec)
 	} else {
