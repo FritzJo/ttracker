@@ -12,7 +12,8 @@ func TestLoadConfig(t *testing.T) {
 	// Create a temporary JSON file with test data
 	testConfig := `{
         "InitialOvertime": 60,
-        "DefaultWorkingHours": 8
+        "DefaultWorkingHours": 8,
+		"BreakTime": 60
     }`
 	tmpfile, err := ioutil.TempFile("", "testconfig*.json")
 	if err != nil {
@@ -43,5 +44,10 @@ func TestLoadConfig(t *testing.T) {
 	expectedDefaultWorkingHours := 8
 	if conf.DefaultWorkingHours != expectedDefaultWorkingHours {
 		t.Errorf("Expected DefaultWorkingHours to be %d, but got %d", expectedDefaultWorkingHours, conf.DefaultWorkingHours)
+	}
+
+	expectedBreakTime := 60
+	if conf.BreakTime != expectedBreakTime {
+		t.Errorf("Expected BreakTime to be %d, but got %d", expectedBreakTime, conf.BreakTime)
 	}
 }

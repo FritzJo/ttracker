@@ -9,6 +9,7 @@ import (
 type Configuration struct {
 	InitialOvertime     int
 	DefaultWorkingHours int
+	BreakTime           int
 }
 
 func LoadConfig(configPath string) Configuration {

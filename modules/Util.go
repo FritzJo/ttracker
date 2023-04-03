@@ -82,10 +82,10 @@ func WriteRecords(recordFileName string, recordList []TimeRecord) {
 }
 
 func CalcOvertime(workStart string, workEnd string) int {
+	config := LoadConfig("config.json")
 	startHour, _ := strconv.Atoi(strings.Split(workStart, ":")[0])
 	startMinute, _ := strconv.Atoi(strings.Split(workStart, ":")[1])
 	endHour, _ := strconv.Atoi(strings.Split(workEnd, ":")[0])
 	endMinute, _ := strconv.Atoi(strings.Split(workEnd, ":")[1])
-
-	return (endHour*60 + endMinute) - (startHour*60 + startMinute) - (LoadConfig("config.json").DefaultWorkingHours * 60) - (60)
+	return (endHour*60 + endMinute) - (startHour*60 + startMinute) - (config.DefaultWorkingHours * 60) - (config.BreakTime)
 }

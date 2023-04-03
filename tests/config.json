@@ -1,4 +1,5 @@
 {
     "InitialOvertime": 0,
-    "DefaultWorkingHours": 8
+    "DefaultWorkingHours": 8,
+    "BreakTime": 60
 }
