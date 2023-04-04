@@ -1,8 +1,15 @@
 # TTracker
-## What is ttracker
 Simple CLI to track your work hours
 
-# Usage
+## Configuration
+Most configuration is handled by the ```config.json```.
+|Option|Description|Default Value|
+|--|--|--|
+|InitialOvertime|Amount of overtime when starting to work with ttracker. (In minutes) |0|
+|DefaultWorkingHours|Expected work hours per day. |8|
+|BreakTime|Usual total break time for each day. (In minutes)|60|
+
+## Usage
 ```
 # Starting a work day
 ./ttracker in
@@ -34,7 +41,7 @@ go build *.go
 - [x] One file for each year
 - [x] Summary of hours worked overtime
 - [x] Taking time off
-- [ ] Configuration of default work hours
+- [x] Configuration of default work hours
 - [ ] Colored output
 - [ ] CSV validation
 - [ ] Code quality and error handling
@@ -42,3 +49,5 @@ go build *.go
 ## FAQ
 ### Does this tool handle different working hours for individual days?
 * No
+### How Can I update an older record?
+* The recommended way is to simply edit the csv with a text editor
