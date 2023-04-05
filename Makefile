@@ -3,7 +3,7 @@ APPNAME ?= ttracker
 
 test:
 	echo "Running tests for $(APPNAME)"
-	go test -race -vet=off
+	go test -race -vet=off ./tests
 
 build:
 	echo "Building $(APPNAME) binary"
