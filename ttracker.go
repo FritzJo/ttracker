@@ -16,11 +16,7 @@ func main() {
 	}
 
 	recordFileName := strconv.Itoa(time.Now().Year()) + "_data.csv"
-
-	// Parse and print records
-	fmt.Println("Reading existing records")
 	recordList := m.ReadRecords(recordFileName)
-	fmt.Println()
 
 	switch os.Args[1] {
 	case "in":

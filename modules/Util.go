@@ -36,7 +36,6 @@ func ReadRecords(recordFileName string) []TimeRecord {
 	for i, line := range data {
 		if i > 0 {
 			var record TimeRecord
-			fmt.Println(line)
 			record.RecordType = line[0]
 			record.Date, _ = time.Parse("2006-01-02", line[1])
 			record.WorkStart = line[2]

@@ -9,6 +9,8 @@ import (
 )
 
 func ValidateCSVFile(filepath string) error {
+	config := LoadConfig("config.json")
+
 	file, err := os.Open(filepath)
 	if err != nil {
 		return err
@@ -51,7 +53,7 @@ func ValidateCSVFile(filepath string) error {
 				return fmt.Errorf("line %d: invalid overtime format", i+1)
 			}
 
-			minutes := int(end.Sub(start).Minutes()) - 540
+			minutes := int(end.Sub(start).Minutes()) - (config.DefaultWorkingHours * 60) - (config.BreakTime)
 			if minutes != overtime {
 				return fmt.Errorf("line %d: overtime value is incorrect", i+1)
 			}
