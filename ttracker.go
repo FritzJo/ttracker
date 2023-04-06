@@ -31,6 +31,13 @@ func main() {
 		recordList = m.Summary(recordList)
 	case "take":
 		recordList = m.Take(recordList)
+	case "validate":
+		err := m.ValidateCSVFile(recordFileName)
+		if err == nil {
+			fmt.Println("OK!")
+		} else {
+			fmt.Println(err)
+		}
 	}
 
 	m.WriteRecords(recordFileName, recordList)
