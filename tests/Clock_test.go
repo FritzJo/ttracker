@@ -37,6 +37,30 @@ func TestClockIn(t *testing.T) {
 	}
 }
 
+func TestClockInWithOptionalParameter(t *testing.T) {
+	// Clock in with a specific work start time
+	workStart := "10:00"
+	record := m.ClockIn(workStart)
+
+	// Check that the record has the correct values
+	if record.RecordType != "R" {
+		t.Errorf("Expected RecordType to be 'R', but got '%s'", record.RecordType)
+	}
+	expectedDate := time.Now().Format("2006-01-02")
+	if record.Date.Format("2006-01-02") != expectedDate {
+		t.Errorf("Expected Date to be '%s', but got '%s'", expectedDate, record.Date.Format("2006-01-02"))
+	}
+	if record.WorkStart != workStart {
+		t.Errorf("Expected WorkStart to be '%s', but got '%s'", workStart, record.WorkStart)
+	}
+	if record.WorkEnd != "" {
+		t.Errorf("Expected WorkEnd to be empty, but got '%s'", record.WorkEnd)
+	}
+	if record.MinutesOvertime != 0 {
+		t.Errorf("Expected MinutesOvertime to be 0, but got %d", record.MinutesOvertime)
+	}
+}
+
 func TestClockOut(t *testing.T) {
 	// Create a TimeRecord to use as input for ClockOut
 	inputRecord := m.TimeRecord{
@@ -59,5 +83,36 @@ func TestClockOut(t *testing.T) {
 	expectedOvertime := m.CalcOvertime(inputRecord.WorkStart, outputRecord.WorkEnd)
 	if outputRecord.MinutesOvertime != expectedOvertime {
 		t.Errorf("Expected MinutesOvertime to be %d, but got %d", expectedOvertime, outputRecord.MinutesOvertime)
+	}
+}
+
+func TestClockOutWithOptionalParameter(t *testing.T) {
+	// Create a time record with a specific work start time
+	workStart := "10:00"
+	record := m.TimeRecord{
+		RecordType:      "R",
+		Date:            time.Now(),
+		WorkStart:       workStart,
+		WorkEnd:         "",
+		MinutesOvertime: 0,
+	}
+
+	// Clock out with a specific work end time
+	workEnd := "17:00"
+	record = m.ClockOut(record, workEnd)
+
+	// Check that the record has the correct values
+	if record.RecordType != "R" {
+		t.Errorf("Expected RecordType to be 'R', but got '%s'", record.RecordType)
+	}
+	expectedDate := time.Now().Format("2006-01-02")
+	if record.Date.Format("2006-01-02") != expectedDate {
+		t.Errorf("Expected Date to be '%s', but got '%s'", expectedDate, record.Date.Format("2006-01-02"))
+	}
+	if record.WorkStart != workStart {
+		t.Errorf("Expected WorkStart to be '%s', but got '%s'", workStart, record.WorkStart)
+	}
+	if record.WorkEnd != workEnd {
+		t.Errorf("Expected WorkEnd to be '%s', but got '%s'", workEnd, record.WorkEnd)
 	}
 }

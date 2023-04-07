@@ -14,7 +14,7 @@ func ClockIn(workStart ...string) TimeRecord {
 		newRecord.WorkStart = workStart[0]
 	} else {
 		hours, minutes, _ := time.Now().Clock()
-		newRecord.WorkStart = fmt.Sprintf("%d:%02d", hours, minutes)
+		newRecord.WorkStart = fmt.Sprintf("%02d:%02d", hours, minutes)
 	}
 
 	newRecord.WorkEnd = ""
@@ -28,7 +28,7 @@ func ClockOut(openRecord TimeRecord, workEnd ...string) TimeRecord {
 		openRecord.WorkEnd = workEnd[0]
 	} else {
 		hours, minutes, _ := time.Now().Clock()
-		openRecord.WorkEnd = fmt.Sprintf("%d:%02d", hours, minutes)
+		openRecord.WorkEnd = fmt.Sprintf("%02d:%02d", hours, minutes)
 	}
 	openRecord.MinutesOvertime = CalcOvertime(openRecord.WorkStart, openRecord.WorkEnd)
 
