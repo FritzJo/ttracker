@@ -30,7 +30,7 @@ Most configuration is handled by the ```config.json```.
 
 ## Build
 ### Dependencies
-* Golang 1.18
+* Golang (tested with >=1.18, but older versions should also work)
 
 ### Instructions
 ```shell
