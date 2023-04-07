@@ -20,9 +20,9 @@ func main() {
 
 	switch os.Args[1] {
 	case "in":
-		recordList = m.In(recordList)
+		recordList = m.In(recordList, os.Args)
 	case "out":
-		recordList = m.Out(recordList)
+		recordList = m.Out(recordList, os.Args)
 	case "summary":
 		recordList = m.Summary(recordList)
 	case "take":

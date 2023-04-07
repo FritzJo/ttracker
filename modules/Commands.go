@@ -6,21 +6,31 @@ import (
 	"strconv"
 )
 
-func In(recordList []TimeRecord) []TimeRecord {
+func In(recordList []TimeRecord, args []string) []TimeRecord {
 	fmt.Println("Clocking in")
-	rec := ClockIn()
-	recordList = append(recordList, rec)
+	if len(args) > 2 {
+		rec := ClockIn(args[2])
+		recordList = append(recordList, rec)
+	} else {
+		rec := ClockIn()
+		recordList = append(recordList, rec)
+	}
 	return recordList
 }
 
-func Out(recordList []TimeRecord) []TimeRecord {
+func Out(recordList []TimeRecord, args []string) []TimeRecord {
 	fmt.Println("Clocking out")
 	lastRecord := recordList[len(recordList)-1]
 	if lastRecord.WorkEnd == "" {
 		// TODO: This doesn't check for record type R yet!
-		rec := ClockOut(lastRecord)
 		recordList = recordList[:len(recordList)-1]
-		recordList = append(recordList, rec)
+		if len(args) > 2 {
+			rec := ClockOut(lastRecord, args[2])
+			recordList = append(recordList, rec)
+		} else {
+			rec := ClockOut(lastRecord)
+			recordList = append(recordList, rec)
+		}
 	} else {
 		fmt.Println("Can't clock out, because there is currently no open time record!")
 	}
