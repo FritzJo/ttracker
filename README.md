@@ -3,6 +3,7 @@ Simple CLI to track your work hours
 
 ## Configuration
 Most configuration is handled by the ```config.json```.
+
 |Option|Description|Default Value|
 |--|--|--|
 |InitialOvertime|Amount of overtime when starting to work with ttracker. (In minutes) |0|
@@ -12,16 +13,19 @@ Most configuration is handled by the ```config.json```.
 ## Usage
 ```
 # Starting a work day
-./ttracker in
+./ttracker in <Optional start time (hh:mm)>
 
 # Ending a work day
-./ttracker out
+./ttracker out <Optional end time (hh:mm)>
 
 # Taking some time off
 ./ttracker take <Time in Minutes>
 
 # Show summary of currently available overtime minutes
 ./ttracker summary
+
+# Validate the currently stored records
+./ttracker validate
 ```
 
 ## Build
@@ -33,6 +37,20 @@ Most configuration is handled by the ```config.json```.
 git clone https://github.com/FritzJo/ttracker.git
 cd ttracker
 go build *.go
+
+# Or use the provided make file
+# Build
+make build
+
+# Install
+make install
+
+# Uninstall
+make uninstall
+
+# Run code tests
+make test
+
 ```
 
 ## Features
@@ -43,7 +61,7 @@ go build *.go
 - [x] Taking time off
 - [x] Configuration of default work hours
 - [ ] Colored output
-- [ ] CSV validation
+- [x] CSV validation
 - [ ] Code quality and error handling
 
 ## FAQ
