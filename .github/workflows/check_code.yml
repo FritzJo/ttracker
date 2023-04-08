@@ -19,7 +19,7 @@ jobs:
         run: go vet *.go
 
       - name: Run tests
-        run: go test -race -vet=off
+        run: go test -race -vet=off ./tests
 
       - name: Build application
         run: go build -o bin/ttracker *.go
