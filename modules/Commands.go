@@ -31,6 +31,7 @@ func Out(recordList []TimeRecord, args []string) []TimeRecord {
 			rec := ClockOut(lastRecord)
 			recordList = append(recordList, rec)
 		}
+		fmt.Println("Today's overtime: " + strconv.Itoa(recordList[len(recordList)-1].MinutesOvertime))
 	} else {
 		fmt.Println("Can't clock out, because there is currently no open time record!")
 	}
