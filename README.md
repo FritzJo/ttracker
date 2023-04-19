@@ -60,7 +60,6 @@ make test
 - [x] Summary of hours worked overtime
 - [x] Taking time off
 - [x] Configuration of default work hours
-- [ ] Colored output
 - [x] CSV validation
 - [ ] Code quality and error handling
 
