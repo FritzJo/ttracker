@@ -16,13 +16,10 @@ func ClockIn(workStart ...string) TimeRecord {
 		hours, minutes, _ := time.Now().Clock()
 		newRecord.WorkStart = fmt.Sprintf("%02d:%02d", hours, minutes)
 	}
-
 	newRecord.WorkEnd = ""
 	newRecord.MinutesOvertime = 0
-
 	return newRecord
 }
-
 func ClockOut(openRecord TimeRecord, workEnd ...string) TimeRecord {
 	if len(workEnd) > 0 && workEnd[0] != "" {
 		openRecord.WorkEnd = workEnd[0]
@@ -31,6 +28,5 @@ func ClockOut(openRecord TimeRecord, workEnd ...string) TimeRecord {
 		openRecord.WorkEnd = fmt.Sprintf("%02d:%02d", hours, minutes)
 	}
 	openRecord.MinutesOvertime = CalcOvertime(openRecord.WorkStart, openRecord.WorkEnd)
-
 	return openRecord
 }

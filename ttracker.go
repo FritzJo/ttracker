@@ -14,10 +14,8 @@ func main() {
 	if len(os.Args) <= 1 {
 		log.Fatal("Please provide an argument!")
 	}
-
 	recordFileName := strconv.Itoa(time.Now().Year()) + "_data.csv"
 	recordList := m.ReadRecords(recordFileName)
-
 	switch os.Args[1] {
 	case "in":
 		recordList = m.In(recordList, os.Args)
@@ -35,6 +33,5 @@ func main() {
 			fmt.Println(err)
 		}
 	}
-
 	m.WriteRecords(recordFileName, recordList)
 }

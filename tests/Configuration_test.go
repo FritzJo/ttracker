@@ -1,11 +1,12 @@
 package modules
 
 import (
-	m "example.com/ttracker/modules"
 	"io/ioutil"
 	"log"
 	"os"
 	"testing"
+
+	m "example.com/ttracker/modules"
 )
 
 func TestLoadConfig(t *testing.T) {
@@ -31,21 +32,17 @@ func TestLoadConfig(t *testing.T) {
 	if err := tmpfile.Close(); err != nil {
 		t.Fatal(err)
 	}
-
 	// Call LoadConfig with the temporary file path
 	conf := m.LoadConfig(tmpfile.Name())
-
 	// Verify that the returned Configuration has the expected values
 	expectedInitialOvertime := 60
 	if conf.InitialOvertime != expectedInitialOvertime {
 		t.Errorf("Expected InitialOvertime to be %d, but got %d", expectedInitialOvertime, conf.InitialOvertime)
 	}
-
 	expectedDefaultWorkingHours := 8
 	if conf.DefaultWorkingHours != expectedDefaultWorkingHours {
 		t.Errorf("Expected DefaultWorkingHours to be %d, but got %d", expectedDefaultWorkingHours, conf.DefaultWorkingHours)
 	}
-
 	expectedBreakTime := 60
 	if conf.BreakTime != expectedBreakTime {
 		t.Errorf("Expected BreakTime to be %d, but got %d", expectedBreakTime, conf.BreakTime)

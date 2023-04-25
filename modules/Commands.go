@@ -17,7 +17,6 @@ func In(recordList []TimeRecord, args []string) []TimeRecord {
 	}
 	return recordList
 }
-
 func Out(recordList []TimeRecord, args []string) []TimeRecord {
 	fmt.Println("Clocking out")
 	lastRecord := recordList[len(recordList)-1]
@@ -35,10 +34,8 @@ func Out(recordList []TimeRecord, args []string) []TimeRecord {
 	} else {
 		fmt.Println("Can't clock out, because there is currently no open time record!")
 	}
-
 	return recordList
 }
-
 func Summary(recordList []TimeRecord) []TimeRecord {
 	fmt.Println("Creating summary")
 	currentOvertimeAmount := LoadConfig("config.json").InitialOvertime
@@ -50,7 +47,6 @@ func Summary(recordList []TimeRecord) []TimeRecord {
 	fmt.Println("\n=> " + strconv.Itoa(currentOvertimeAmount) + " min")
 	return recordList
 }
-
 func Take(recordList []TimeRecord) []TimeRecord {
 	fmt.Println("Taking time off: " + os.Args[2])
 	var offRecord TimeRecord

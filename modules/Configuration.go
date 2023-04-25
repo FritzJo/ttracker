@@ -20,7 +20,6 @@ func LoadConfig(configPath string) Configuration {
 		return Configuration{}
 	}
 	defer file.Close()
-
 	decoder := json.NewDecoder(file)
 	Conf := Configuration{}
 	err = decoder.Decode(&Conf)

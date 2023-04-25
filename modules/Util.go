@@ -13,25 +13,21 @@ import (
 func ReadRecords(recordFileName string) []TimeRecord {
 	// Read existing CSV data
 	f, err := os.OpenFile(recordFileName, os.O_CREATE|os.O_RDWR|os.O_APPEND, 0644)
-
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	defer func(f *os.File) {
 		err := f.Close()
 		if err != nil {
 			log.Fatal(err)
 		}
 	}(f)
-
 	csvReader := csv.NewReader(f)
 	csvReader.Comma = ';'
 	data, err := csvReader.ReadAll()
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	var timeRecords []TimeRecord
 	for i, line := range data {
 		if i > 0 {
@@ -46,7 +42,6 @@ func ReadRecords(recordFileName string) []TimeRecord {
 	}
 	return timeRecords
 }
-
 func WriteRecords(recordFileName string, recordList []TimeRecord) {
 	// Write file for new records
 	fw, err := os.Create(recordFileName)
@@ -56,13 +51,11 @@ func WriteRecords(recordFileName string, recordList []TimeRecord) {
 	csvWriter := csv.NewWriter(fw)
 	csvWriter.Comma = ';'
 	defer csvWriter.Flush()
-
 	// Write csv headers
 	err = csvWriter.Write([]string{"type", "date", "start", "end", "overtime"})
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	// Writing data to csv
 	for _, record := range recordList {
 		e := csvWriter.Write([]string{
@@ -79,7 +72,6 @@ func WriteRecords(recordFileName string, recordList []TimeRecord) {
 		}
 	}
 }
-
 func CalcOvertime(workStart string, workEnd string) int {
 	config := LoadConfig("config.json")
 	startHour, _ := strconv.Atoi(strings.Split(workStart, ":")[0])

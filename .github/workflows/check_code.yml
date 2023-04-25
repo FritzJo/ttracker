@@ -5,7 +5,6 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,9 +16,7 @@ jobs:
           go-version: 'stable'
       - name: Run go vet
         run: go vet *.go
-
       - name: Run tests
         run: go test -race -v -vet=off ./tests
-
       - name: Build application
         run: go build -o bin/ttracker *.go
