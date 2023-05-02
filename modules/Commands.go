@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"time"
 )
 
 func In(recordList []TimeRecord, args []string) []TimeRecord {
@@ -55,4 +56,12 @@ func Take(recordList []TimeRecord) []TimeRecord {
 	offRecord.MinutesOvertime = -1 * offtime
 	recordList = append(recordList, offRecord)
 	return recordList
+}
+
+func Status(recordList []TimeRecord) string {
+	openRecord := recordList[len(recordList)-1]
+	hours, minutes, _ := time.Now().Clock()
+	currentTime := fmt.Sprintf("%02d:%02d", hours, minutes)
+	openRecord.MinutesOvertime = CalcOvertime(openRecord.WorkStart, currentTime)
+	return strconv.Itoa(openRecord.MinutesOvertime) + " Minutes."
 }

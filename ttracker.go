@@ -21,6 +21,8 @@ func main() {
 		recordList = m.In(recordList, os.Args)
 	case "out":
 		recordList = m.Out(recordList, os.Args)
+	case "status":
+		fmt.Println(m.Status(recordList))
 	case "summary":
 		recordList = m.Summary(recordList)
 	case "take":
