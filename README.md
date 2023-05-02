@@ -11,12 +11,19 @@ Most configuration is handled by the ```config.json```.
 ```
 # Starting a work day
 ./ttracker in <Optional start time (hh:mm)>
+
 # Ending a work day
 ./ttracker out <Optional end time (hh:mm)>
+
 # Taking some time off
 ./ttracker take <Time in Minutes>
+
 # Show summary of currently available overtime minutes
 ./ttracker summary
+
+# Show change in overtime if work would end now
+./ttracker status
+
 # Validate the currently stored records
 ./ttracker validate
 ```
@@ -54,5 +61,5 @@ make test
 ## FAQ
 ### Does this tool handle different working hours for individual days?
 * No
-### How Can I update an older record?
+### How can I update an older record?
 * The recommended way is to simply edit the csv with a text editor
