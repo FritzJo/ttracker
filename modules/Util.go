@@ -42,6 +42,7 @@ func ReadRecords(recordFileName string) []TimeRecord {
 	}
 	return timeRecords
 }
+
 func WriteRecords(recordFileName string, recordList []TimeRecord) {
 	// Write file for new records
 	fw, err := os.Create(recordFileName)
@@ -72,6 +73,11 @@ func WriteRecords(recordFileName string, recordList []TimeRecord) {
 		}
 	}
 }
+
+// CalcOvertime calculates the overtime in minutes based on the given work start and end times.
+// It takes the work start and end times as strings in the format "hh:mm", and uses the default working
+// hours and break time from the config file to calculate the overtime.
+// It returns the overtime in minutes as an integer.
 func CalcOvertime(workStart string, workEnd string) int {
 	config := LoadConfig("config.json")
 	startHour, _ := strconv.Atoi(strings.Split(workStart, ":")[0])
