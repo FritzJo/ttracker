@@ -63,5 +63,8 @@ func Status(recordList []TimeRecord) string {
 	hours, minutes, _ := time.Now().Clock()
 	currentTime := fmt.Sprintf("%02d:%02d", hours, minutes)
 	openRecord.MinutesOvertime = CalcOvertime(openRecord.WorkStart, currentTime)
-	return strconv.Itoa(openRecord.MinutesOvertime) + " Minutes."
+
+	return fmt.Sprintf("Clocked in at: %v\nOvertime: %d Minutes.",
+		openRecord.WorkStart,
+		openRecord.MinutesOvertime)
 }
