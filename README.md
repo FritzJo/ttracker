@@ -1,6 +1,6 @@
 # TTracker
 
-Simple CLI to track your work hours. Written in Go with zero external dependencies.
+Simple CLI to track your work hours. Written in Go with zero external dependencies and a local, CSV-based storage.
 
 ## Configuration
 
@@ -14,8 +14,10 @@ Most configuration is handled by the ```config.json```.
 
 ## Usage
 
-In its most simple form, simply use the ```in``` and ```out``` commands to start and end your work day.
-Everything else is handled in the background by ttracker.
+In its most basic form, simply use the ```in``` and ```out``` commands to start and end your work day.
+Everything else is handled in the background by ttracker. 
+The log of all working hours will be stored in a CSV file, named after the current year.
+An example file can be found in [```docs/2023_data.csv```](docs/2023_data.csv)
 
 ```
 # Starting a work day
@@ -37,7 +39,6 @@ The full list of supported commands is listed below.
 | validate | Validate the currently stored records. Prints invalid records.                               | ```validate```  |
 
 ## Build
-
 ### Dependencies
 
 * Golang (tested with >=1.18, but older versions should also work)
@@ -63,7 +64,7 @@ make uninstall
 make test
 ```
 
-## Features
+## Features / Roadmap
 
 - [x] Clock-in / Clock-out
 - [x] CSV based storage
