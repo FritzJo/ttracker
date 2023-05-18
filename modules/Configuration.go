@@ -10,6 +10,7 @@ type Configuration struct {
 	InitialOvertime     int
 	DefaultWorkingHours int
 	BreakTime           int
+	StorageLocation     string
 }
 
 // LoadConfig reads a JSON configuration file from the given path and returns a Configuration struct.

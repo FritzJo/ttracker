@@ -11,6 +11,7 @@ Most configuration is handled by the ```config.json```.
 | InitialOvertime     | Amount of overtime when starting to work with ttracker. (In minutes) | 0             |
 | DefaultWorkingHours | Expected work hours per day.                                         | 8             |
 | BreakTime           | Usual total break time for each day. (In minutes)                    | 60            |
+| StorageLocation     | Output directory for the created CSV files.                          | .             |
 
 ## Usage
 

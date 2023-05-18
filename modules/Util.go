@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -44,8 +45,9 @@ func ReadRecords(recordFileName string) []TimeRecord {
 }
 
 func WriteRecords(recordFileName string, recordList []TimeRecord) {
+	config := LoadConfig("config.json")
 	// Write file for new records
-	fw, err := os.Create(recordFileName)
+	fw, err := os.Create(filepath.Join(config.StorageLocation, recordFileName))
 	if err != nil {
 		log.Fatal(err)
 	}
