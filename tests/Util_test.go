@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	m "example.com/ttracker/modules"
+	m "github.com/FritzJo/ttracker/modules"
 )
 
 func TestReadRecords(t *testing.T) {

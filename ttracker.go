@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	m "example.com/ttracker/modules"
+	m "github.com/FritzJo/ttracker/modules"
 )
 
 func main() {
