@@ -23,14 +23,6 @@ func In(recordList []TimeRecord, args []string) []TimeRecord {
 
 // Out clocks the user out and adds a new time record to the input recordList.
 //
-// Out first checks if the user has an open time record by examining the last record in the list. If the last record's
-// WorkEnd field is empty, Out removes the last record from the list and creates a new time record with the current time
-// as the WorkEnd field. If the user provides a reason for clocking out, Out also sets the Reason field of the new record.
-// The function calculates the number of overtime minutes worked during the clock-in to clock-out period and sets the
-// MinutesOvertime field of the new record accordingly. Finally, the function prints out the number of overtime minutes
-// worked during the day. If the last record in the list already has a non-empty WorkEnd field, indicating that the user
-// is already clocked out, the function prints an error message and does not modify the input recordList.
-//
 // Parameters:
 // - recordList: A list of TimeRecord structs representing the user's past working time times.
 // - args: A slice of strings containing the command-line arguments passed to the program.
@@ -70,10 +62,6 @@ func Out(recordList []TimeRecord, args []string) []TimeRecord {
 
 // Summary prints a summary of the user's overtime hours based on the given list of time records.
 //
-// Summary calculates the total overtime hours accumulated by the user by iterating over the list of time records
-// and summing up the MinutesOvertime field of each record. The function prints out each record's date and overtime
-// minutes, as well as the total overtime hours accumulated. The function does not modify the input recordList.
-//
 // Parameters:
 // - recordList: A list of TimeRecord structs representing the user's past working time times.
 //
@@ -102,11 +90,6 @@ func Summary(recordList []TimeRecord) []TimeRecord {
 
 // Take adds a new TimeRecord to the given list indicating that the user is taking time off.
 //
-// Take creates a new TimeRecord with the RecordType "O" to indicate that the user is taking time off.
-// The number of minutes of time off is specified as a command-line argument and is stored in the MinutesOvertime
-// field of the TimeRecord with the opposite sign to indicate time off instead of overtime.
-// The new TimeRecord is appended to the input recordList, and the modified list is returned.
-//
 // Parameters:
 // - recordList: A list of TimeRecord structs representing the user's past working time times.
 //
@@ -128,10 +111,6 @@ func Take(recordList []TimeRecord) []TimeRecord {
 }
 
 // Status returns a string containing information about the user's current work status.
-//
-// Given a list of time records, Status retrieves the most recent record and calculates
-// the overtime minutes based on the current time. The function returns a formatted string
-// containing the clock-in time and overtime minutes.
 //
 // Parameters:
 // - recordList: A list of TimeRecord structs representing the user's past working time times.
