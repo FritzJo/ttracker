@@ -48,6 +48,10 @@ func ValidateCSVFile(filepath string) error {
 				return fmt.Errorf("line %d: invalid date format", i+1)
 			}
 
+			if record[0] == "O" {
+				continue
+			}
+
 			// Check if the start time is in the correct format
 			start, err := time.Parse("15:04", record[2])
 			if err != nil {
