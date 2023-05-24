@@ -63,6 +63,9 @@ make uninstall
 
 # Run code tests
 make test
+
+# Build binaries for all supported operating systems/architectures
+make release
 ```
 
 ## Features / Roadmap
@@ -74,7 +77,7 @@ make test
 - [x] Taking time off
 - [x] Configuration of default work hours
 - [x] CSV validation
-- [ ] Code quality and error handling
+- [x] Code quality and error handling
 - [ ] Map time taken off to a specific day
 
 ## FAQ
