@@ -17,7 +17,7 @@ func main() {
 	recordFileName := strconv.Itoa(time.Now().Year()) + "_data.csv"
 	recordList := m.ReadRecords(recordFileName)
 	// Check for empty file
-	if len(recordList) > 1 || os.Args[1] == "in" {
+	if len(recordList) >= 1 || os.Args[1] == "in" {
 		switch os.Args[1] {
 		case "in":
 			recordList = m.In(recordList, os.Args)
