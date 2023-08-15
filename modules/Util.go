@@ -13,7 +13,9 @@ import (
 
 func ReadRecords(recordFileName string) []TimeRecord {
 	// Read existing CSV data
-	f, err := os.OpenFile(recordFileName, os.O_CREATE|os.O_RDWR|os.O_APPEND, 0644)
+	config := LoadConfig("config.json")
+	fullPath := filepath.Join(config.StorageLocation, recordFileName)
+	f, err := os.OpenFile(fullPath, os.O_CREATE|os.O_RDWR|os.O_APPEND, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
