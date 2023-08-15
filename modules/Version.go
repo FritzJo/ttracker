@@ -2,7 +2,7 @@ package modules
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strconv"
 	"strings"
@@ -37,7 +37,7 @@ func getLatestVersion() (float64, error) {
 		return 0.0, err
 	}
 	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println("Error: Cant fetch latest version.")
 		return 0.0, err
