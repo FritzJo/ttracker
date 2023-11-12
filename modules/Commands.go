@@ -77,7 +77,8 @@ func Summary(recordList []TimeRecord) []TimeRecord {
 
 	// Iterate over the list of time records and print each record's date and overtime minutes
 	for _, record := range recordList {
-		fmt.Println(record.Date.Format("2006-01-02") + " -> " + strconv.Itoa(record.MinutesOvertime) + " min")
+		minutes := fmt.Sprintf("%4d", record.MinutesOvertime)
+		fmt.Println(record.Date.Format("2006-01-02") + " -> " + minutes + " min")
 		currentOvertimeAmount += record.MinutesOvertime
 	}
 
