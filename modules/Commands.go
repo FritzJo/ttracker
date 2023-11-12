@@ -102,6 +102,8 @@ func Take(recordList []TimeRecord) []TimeRecord {
 	// Create a new TimeRecord for the time off
 	var offRecord TimeRecord
 	offRecord.RecordType = "O"
+	t := time.Now().Local()
+	offRecord.Date, _ = time.Parse("2006-01-02", t.Format("2006-01-02"))
 	offtime, _ := strconv.Atoi(os.Args[2])
 	offRecord.MinutesOvertime = -1 * offtime
 
