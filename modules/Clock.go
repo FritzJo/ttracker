@@ -10,7 +10,7 @@ import (
 // minutes of overtime is initialized to 0. Returns the new TimeRecord.
 func ClockIn(workStart ...string) TimeRecord {
 	var newRecord TimeRecord
-	t := time.Now()
+	t := time.Now().Local()
 	newRecord.RecordType = "R"
 	newRecord.Date, _ = time.Parse("2006-01-02", t.Format("2006-01-02"))
 	if len(workStart) > 0 && workStart[0] != "" {
