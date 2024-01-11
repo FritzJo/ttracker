@@ -11,6 +11,17 @@ import (
 	"time"
 )
 
+func PreviousYearRecordsExist() bool {
+	var currentYear int = time.Now().Year()
+	var fileName string = strconv.Itoa(currentYear-1) + "_data.csv"
+	// Check if file for previous year exists
+	if _, err := os.Stat(fileName); os.IsNotExist(err) {
+		return false
+	} else {
+		return true
+	}
+}
+
 func ReadRecords(recordFileName string) []TimeRecord {
 	// Read existing CSV data
 	config := LoadConfig("config.json")

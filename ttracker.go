@@ -16,6 +16,23 @@ func main() {
 	}
 	recordFileName := strconv.Itoa(time.Now().Year()) + "_data.csv"
 	recordList := m.ReadRecords(recordFileName)
+
+	// Import previous year
+	if m.PreviousYearRecordsExist() {
+		conf := m.LoadConfig("config.json")
+		recordFileName := strconv.Itoa(time.Now().Year()-1) + "_data.csv"
+		oldRecordList := m.ReadRecords(recordFileName)
+		currentOvertimeAmount := 0
+		for _, record := range oldRecordList {
+			currentOvertimeAmount += record.MinutesOvertime
+		}
+		if conf.InitialOvertime != currentOvertimeAmount {
+			fmt.Println("First new record for this year, summarizing last years records...")
+			fmt.Println("Last years overtime: " + strconv.Itoa(currentOvertimeAmount))
+			conf.InitialOvertime = currentOvertimeAmount
+			m.SaveConfig("config.json", conf)
+		}
+	}
 	// Check for empty file
 	if len(recordList) >= 1 || os.Args[1] == "in" {
 		switch os.Args[1] {
