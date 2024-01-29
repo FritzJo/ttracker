@@ -10,7 +10,9 @@ import (
 // In function is used to clock in a new time record with the current time.
 // If an argument is provided, it will be used as the work start time for the new record.
 func In(recordList []TimeRecord, args []string) []TimeRecord {
-	fmt.Println("Clocking in")
+	message := fmt.Sprintf("Clocking in (%s)", time.Now().Format("15:04"))
+	fmt.Println(message)
+
 	if len(args) > 2 {
 		rec := ClockIn(args[2])
 		recordList = append(recordList, rec)
@@ -31,7 +33,8 @@ func In(recordList []TimeRecord, args []string) []TimeRecord {
 // The input recordList, with a new TimeRecord appended if the user was clocked out successfully.
 func Out(recordList []TimeRecord, args []string) []TimeRecord {
 	// Print a message indicating that the user is clocking out
-	fmt.Println("Clocking out")
+	message := fmt.Sprintf("Clocking out (%s)", time.Now().Format("15:04"))
+	fmt.Println(message)
 
 	// Get the last time record from the list
 	lastRecord := recordList[len(recordList)-1]
