@@ -7,7 +7,8 @@ import (
 	"strconv"
 	"time"
 
-	m "github.com/FritzJo/ttracker/modules"
+	"github.com/FritzJo/ttracker/modules"
+	"github.com/FritzJo/ttracker/modules/datatypes"
 )
 
 func main() {
@@ -15,13 +16,13 @@ func main() {
 		log.Fatal("Please provide an argument!")
 	}
 	recordFileName := strconv.Itoa(time.Now().Year()) + "_data.csv"
-	recordList := m.ReadRecords(recordFileName)
+	recordList := modules.ReadRecords(recordFileName)
 
 	// Import previous year
-	if m.PreviousYearRecordsExist() {
-		conf := m.LoadConfig("config.json")
+	if modules.PreviousYearRecordsExist() {
+		conf := datatypes.LoadConfig("config.json")
 		recordFileName := strconv.Itoa(time.Now().Year()-1) + "_data.csv"
-		oldRecordList := m.ReadRecords(recordFileName)
+		oldRecordList := modules.ReadRecords(recordFileName)
 		currentOvertimeAmount := 0
 		for _, record := range oldRecordList {
 			currentOvertimeAmount += record.MinutesOvertime
@@ -30,26 +31,24 @@ func main() {
 			fmt.Println("First new record for this year, summarizing last years records...")
 			fmt.Println("Last years overtime: " + strconv.Itoa(currentOvertimeAmount))
 			conf.InitialOvertime = currentOvertimeAmount
-			m.SaveConfig("config.json", conf)
+			datatypes.SaveConfig("config.json", conf)
 		}
 	}
 	// Check for empty file
 	if len(recordList) >= 1 || os.Args[1] == "in" {
 		switch os.Args[1] {
 		case "in":
-			recordList = m.In(recordList, os.Args)
+			recordList = modules.In(recordList, os.Args)
 		case "out":
-			recordList = m.Out(recordList, os.Args)
+			recordList = modules.Out(recordList, os.Args)
 		case "status":
-			fmt.Println(m.Status(recordList))
+			fmt.Println(modules.Status(recordList))
 		case "summary":
-			recordList = m.Summary(recordList)
+			recordList = modules.Summary(recordList)
 		case "take":
-			recordList = m.Take(recordList)
-		case "update":
-			m.GetVersion()
+			recordList = modules.Take(recordList)
 		case "validate":
-			err := m.ValidateCSVFile(recordFileName)
+			err := modules.ValidateCSVFile(recordFileName)
 			if err == nil {
 				fmt.Println("OK!")
 			} else {
@@ -60,5 +59,5 @@ func main() {
 		fmt.Println("Not enough data available for this command. Please clock in at least once.")
 	}
 
-	m.WriteRecords(recordFileName, recordList)
+	modules.WriteRecords(recordFileName, recordList)
 }

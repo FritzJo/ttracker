@@ -6,7 +6,7 @@ import (
 	"os"
 	"testing"
 
-	m "github.com/FritzJo/ttracker/modules"
+	"github.com/FritzJo/ttracker/modules/datatypes"
 )
 
 func TestLoadConfig(t *testing.T) {
@@ -33,7 +33,7 @@ func TestLoadConfig(t *testing.T) {
 		t.Fatal(err)
 	}
 	// Call LoadConfig with the temporary file path
-	conf := m.LoadConfig(tmpfile.Name())
+	conf := datatypes.LoadConfig(tmpfile.Name())
 	// Verify that the returned Configuration has the expected values
 	expectedInitialOvertime := 60
 	if conf.InitialOvertime != expectedInitialOvertime {

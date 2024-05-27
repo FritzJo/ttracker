@@ -9,6 +9,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/FritzJo/ttracker/modules/datatypes"
 )
 
 func PreviousYearRecordsExist() bool {
@@ -22,9 +24,9 @@ func PreviousYearRecordsExist() bool {
 	}
 }
 
-func ReadRecords(recordFileName string) []TimeRecord {
+func ReadRecords(recordFileName string) []datatypes.TimeRecord {
 	// Read existing CSV data
-	config := LoadConfig("config.json")
+	config := datatypes.LoadConfig("config.json")
 	fullPath := filepath.Join(config.StorageLocation, recordFileName)
 	f, err := os.OpenFile(fullPath, os.O_CREATE|os.O_RDWR|os.O_APPEND, 0644)
 	if err != nil {
@@ -42,10 +44,10 @@ func ReadRecords(recordFileName string) []TimeRecord {
 	if err != nil {
 		log.Fatal(err)
 	}
-	var timeRecords []TimeRecord
+	var timeRecords []datatypes.TimeRecord
 	for i, line := range data {
 		if i > 0 {
-			var record TimeRecord
+			var record datatypes.TimeRecord
 			record.RecordType = line[0]
 			record.Date, _ = time.Parse("2006-01-02", line[1])
 			record.WorkStart = line[2]
@@ -57,8 +59,8 @@ func ReadRecords(recordFileName string) []TimeRecord {
 	return timeRecords
 }
 
-func WriteRecords(recordFileName string, recordList []TimeRecord) {
-	config := LoadConfig("config.json")
+func WriteRecords(recordFileName string, recordList []datatypes.TimeRecord) {
+	config := datatypes.LoadConfig("config.json")
 	// Write file for new records
 	fw, err := os.Create(filepath.Join(config.StorageLocation, recordFileName))
 	if err != nil {
@@ -94,7 +96,7 @@ func WriteRecords(recordFileName string, recordList []TimeRecord) {
 // hours and break time from the config file to calculate the overtime.
 // It returns the overtime in minutes as an integer.
 func CalcOvertime(workStart string, workEnd string) int {
-	config := LoadConfig("config.json")
+	config := datatypes.LoadConfig("config.json")
 	startHour, _ := strconv.Atoi(strings.Split(workStart, ":")[0])
 	startMinute, _ := strconv.Atoi(strings.Split(workStart, ":")[1])
 	endHour, _ := strconv.Atoi(strings.Split(workEnd, ":")[0])

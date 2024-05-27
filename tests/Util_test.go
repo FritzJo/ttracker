@@ -8,7 +8,8 @@ import (
 	"testing"
 	"time"
 
-	m "github.com/FritzJo/ttracker/modules"
+	"github.com/FritzJo/ttracker/modules"
+	"github.com/FritzJo/ttracker/modules/datatypes"
 )
 
 func TestReadRecords(t *testing.T) {
@@ -32,12 +33,12 @@ func TestReadRecords(t *testing.T) {
 	}
 	csvWriter.Flush()
 	// Call ReadRecords on the temporary file
-	records := m.ReadRecords(f.Name())
+	records := modules.ReadRecords(f.Name())
 	// Verify the records are as expected
 	if len(records) != 2 {
 		t.Errorf("Expected 2 records, got %d", len(records))
 	}
-	expectedRecord1 := m.TimeRecord{
+	expectedRecord1 := datatypes.TimeRecord{
 		RecordType:      "R",
 		Date:            time.Date(2022, time.January, 1, 0, 0, 0, 0, time.UTC),
 		WorkStart:       "09:00",
@@ -47,7 +48,7 @@ func TestReadRecords(t *testing.T) {
 	if !reflect.DeepEqual(records[0], expectedRecord1) {
 		t.Errorf("Expected record 1 to be %+v, got %+v", expectedRecord1, records[0])
 	}
-	expectedRecord2 := m.TimeRecord{
+	expectedRecord2 := datatypes.TimeRecord{
 		RecordType:      "R",
 		Date:            time.Date(2022, time.January, 2, 0, 0, 0, 0, time.UTC),
 		WorkStart:       "09:00",
@@ -66,7 +67,7 @@ func TestWriteRecords(t *testing.T) {
 	}
 	defer os.Remove(f.Name())
 	// Create some sample records to write
-	records := []m.TimeRecord{
+	records := []datatypes.TimeRecord{
 		{
 			RecordType:      "R",
 			Date:            time.Date(2022, time.January, 1, 0, 0, 0, 0, time.UTC),
@@ -83,7 +84,7 @@ func TestWriteRecords(t *testing.T) {
 		},
 	}
 	// Call WriteRecords to write the records to the file
-	m.WriteRecords(f.Name(), records)
+	modules.WriteRecords(f.Name(), records)
 	// Read the file and verify that it contains the expected data
 	data, err := ioutil.ReadFile(f.Name())
 	if err != nil {
@@ -107,7 +108,7 @@ func TestCalcOvertime(t *testing.T) {
 	}
 	// Iterate over the test cases and verify the results
 	for _, tc := range testCases {
-		overtime := m.CalcOvertime(tc.workStart, tc.workEnd)
+		overtime := modules.CalcOvertime(tc.workStart, tc.workEnd)
 		if overtime != tc.expectedOvertime {
 			t.Errorf("CalcOvertime(%q, %q) = %d, expected %d", tc.workStart, tc.workEnd, overtime, tc.expectedOvertime)
 		}

@@ -5,11 +5,13 @@ import (
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/FritzJo/ttracker/modules/datatypes"
 )
 
 // In function is used to clock in a new time record with the current time.
 // If an argument is provided, it will be used as the work start time for the new record.
-func In(recordList []TimeRecord, args []string) []TimeRecord {
+func In(recordList []datatypes.TimeRecord, args []string) []datatypes.TimeRecord {
 	message := ""
 	if len(args) > 2 {
 		rec := ClockIn(args[2])
@@ -32,7 +34,7 @@ func In(recordList []TimeRecord, args []string) []TimeRecord {
 //
 // Returns:
 // The input recordList, with a new TimeRecord appended if the user was clocked out successfully.
-func Out(recordList []TimeRecord, args []string) []TimeRecord {
+func Out(recordList []datatypes.TimeRecord, args []string) []datatypes.TimeRecord {
 	// Print a message indicating that the user is clocking out
 	message := ""
 
@@ -73,12 +75,12 @@ func Out(recordList []TimeRecord, args []string) []TimeRecord {
 //
 // Returns:
 // The input recordList, unchanged.
-func Summary(recordList []TimeRecord) []TimeRecord {
+func Summary(recordList []datatypes.TimeRecord) []datatypes.TimeRecord {
 	// Print a message indicating that a summary is being created
 	fmt.Println("Creating summary")
 
 	// Load the initial overtime amount from the configuration file and print it
-	currentOvertimeAmount := LoadConfig("config.json").InitialOvertime
+	currentOvertimeAmount := datatypes.LoadConfig("config.json").InitialOvertime
 	fmt.Println("Initial overtime: " + strconv.Itoa(currentOvertimeAmount) + " min")
 
 	// Iterate over the list of time records and print each record's date and overtime minutes
@@ -102,12 +104,12 @@ func Summary(recordList []TimeRecord) []TimeRecord {
 //
 // Returns:
 // A new list of TimeRecord structs that includes the new TimeRecord representing the time off.
-func Take(recordList []TimeRecord) []TimeRecord {
+func Take(recordList []datatypes.TimeRecord) []datatypes.TimeRecord {
 	// Print a message indicating that the user is taking time off
 	fmt.Println("Taking time off: " + os.Args[2])
 
 	// Create a new TimeRecord for the time off
-	var offRecord TimeRecord
+	var offRecord datatypes.TimeRecord
 	offRecord.RecordType = "O"
 	t := time.Now().Local()
 	offRecord.Date, _ = time.Parse("2006-01-02", t.Format("2006-01-02"))
@@ -126,7 +128,7 @@ func Take(recordList []TimeRecord) []TimeRecord {
 //
 // Returns:
 // A formatted string containing the clock-in time and overtime minutes.
-func Status(recordList []TimeRecord) string {
+func Status(recordList []datatypes.TimeRecord) string {
 	// Get the most recent time record from the list
 	openRecord := recordList[len(recordList)-1]
 

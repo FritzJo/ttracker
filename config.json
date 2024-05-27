@@ -1,6 +1,1 @@
-{
-    "InitialOvertime": 0,
-    "DefaultWorkingHours": 8,
-    "BreakTime": 60,
-    "StorageLocation": "."
-}
+{"InitialOvertime":-540,"DefaultWorkingHours":8,"BreakTime":60,"StorageLocation":"."}

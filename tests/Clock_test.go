@@ -4,11 +4,12 @@ import (
 	"testing"
 	"time"
 
-	m "github.com/FritzJo/ttracker/modules"
+	"github.com/FritzJo/ttracker/modules"
+	"github.com/FritzJo/ttracker/modules/datatypes"
 )
 
 func TestClockIn(t *testing.T) {
-	tr := m.ClockIn()
+	tr := modules.ClockIn()
 	// Verify the returned TimeRecord has the correct RecordType
 	if tr.RecordType != "R" {
 		t.Errorf("Expected RecordType to be 'R', but got '%s'", tr.RecordType)
@@ -35,7 +36,7 @@ func TestClockIn(t *testing.T) {
 func TestClockInWithOptionalParameter(t *testing.T) {
 	// Clock in with a specific work start time
 	workStart := "10:00"
-	record := m.ClockIn(workStart)
+	record := modules.ClockIn(workStart)
 	// Check that the record has the correct values
 	if record.RecordType != "R" {
 		t.Errorf("Expected RecordType to be 'R', but got '%s'", record.RecordType)
@@ -56,21 +57,21 @@ func TestClockInWithOptionalParameter(t *testing.T) {
 }
 func TestClockOut(t *testing.T) {
 	// Create a TimeRecord to use as input for ClockOut
-	inputRecord := m.TimeRecord{
+	inputRecord := datatypes.TimeRecord{
 		RecordType: "R",
 		Date:       time.Now(),
 		WorkStart:  "09:00",
 		WorkEnd:    "",
 	}
 	// Call ClockOut and get the output TimeRecord
-	outputRecord := m.ClockOut(inputRecord)
+	outputRecord := modules.ClockOut(inputRecord)
 	// Verify that the outputRecord has the expected WorkEnd value
 	expectedEnd := time.Now().Format("15:04")
 	if outputRecord.WorkEnd != expectedEnd {
 		t.Errorf("Expected WorkEnd to be '%s', but got '%s'", expectedEnd, outputRecord.WorkEnd)
 	}
 	// Verify that the outputRecord has the expected MinutesOvertime value
-	expectedOvertime := m.CalcOvertime(inputRecord.WorkStart, outputRecord.WorkEnd)
+	expectedOvertime := modules.CalcOvertime(inputRecord.WorkStart, outputRecord.WorkEnd)
 	if outputRecord.MinutesOvertime != expectedOvertime {
 		t.Errorf("Expected MinutesOvertime to be %d, but got %d", expectedOvertime, outputRecord.MinutesOvertime)
 	}
@@ -78,7 +79,7 @@ func TestClockOut(t *testing.T) {
 func TestClockOutWithOptionalParameter(t *testing.T) {
 	// Create a time record with a specific work start time
 	workStart := "10:00"
-	record := m.TimeRecord{
+	record := datatypes.TimeRecord{
 		RecordType:      "R",
 		Date:            time.Now(),
 		WorkStart:       workStart,
@@ -87,7 +88,7 @@ func TestClockOutWithOptionalParameter(t *testing.T) {
 	}
 	// Clock out with a specific work end time
 	workEnd := "17:00"
-	record = m.ClockOut(record, workEnd)
+	record = modules.ClockOut(record, workEnd)
 	// Check that the record has the correct values
 	if record.RecordType != "R" {
 		t.Errorf("Expected RecordType to be 'R', but got '%s'", record.RecordType)

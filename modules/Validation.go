@@ -6,6 +6,8 @@ import (
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/FritzJo/ttracker/modules/datatypes"
 )
 
 // ValidateCSVFile validates a CSV file at the given filepath against the expected format of the time tracker application.
@@ -13,7 +15,7 @@ import (
 // The function returns an error if the file is not valid, and nil if it is valid.
 func ValidateCSVFile(filepath string) error {
 	// Load the configuration file
-	config := LoadConfig("config.json")
+	config := datatypes.LoadConfig("config.json")
 
 	// Open the CSV file
 	file, err := os.Open(filepath)
