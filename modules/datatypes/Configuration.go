@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"sync"
 )
 
 type Configuration struct {
@@ -13,21 +14,30 @@ type Configuration struct {
 	StorageLocation     string
 }
 
-func LoadConfig(configPath string) Configuration {
-	file, err := os.Open(configPath)
-	if err != nil {
-		fmt.Println("Error, couldn't open configuration file: ", err)
-		fmt.Println(configPath)
-		return Configuration{}
+var (
+	config *Configuration
+	once   sync.Once
+)
+
+func LoadConfig(configPath string) (*Configuration, error) {
+	var erro error
+	once.Do(func() {
+		file, err := os.Open(configPath)
+		if err != nil {
+			erro = err // Capture the error so it can be returned
+			return
+		}
+		defer file.Close()
+
+		decoder := json.NewDecoder(file)
+		config = &Configuration{} // Initialize the package-level config
+		erro = decoder.Decode(config)
+	})
+
+	if erro != nil {
+		return nil, fmt.Errorf("error loading config: %w", erro)
 	}
-	defer file.Close()
-	decoder := json.NewDecoder(file)
-	Conf := Configuration{}
-	err = decoder.Decode(&Conf)
-	if err != nil {
-		fmt.Println("Error, couldn't decode configuration: ", err)
-	}
-	return Conf
+	return config, nil
 }
 
 func SaveConfig(configPath string, conf Configuration) error {

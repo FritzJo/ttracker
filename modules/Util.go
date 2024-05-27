@@ -26,7 +26,7 @@ func PreviousYearRecordsExist() bool {
 
 func ReadRecords(recordFileName string) []datatypes.TimeRecord {
 	// Read existing CSV data
-	config := datatypes.LoadConfig("config.json")
+	config, _ := datatypes.LoadConfig("config.json")
 	fullPath := filepath.Join(config.StorageLocation, recordFileName)
 	f, err := os.OpenFile(fullPath, os.O_CREATE|os.O_RDWR|os.O_APPEND, 0644)
 	if err != nil {
@@ -60,7 +60,7 @@ func ReadRecords(recordFileName string) []datatypes.TimeRecord {
 }
 
 func WriteRecords(recordFileName string, recordList []datatypes.TimeRecord) {
-	config := datatypes.LoadConfig("config.json")
+	config, _ := datatypes.LoadConfig("config.json")
 	// Write file for new records
 	fw, err := os.Create(filepath.Join(config.StorageLocation, recordFileName))
 	if err != nil {
@@ -96,10 +96,18 @@ func WriteRecords(recordFileName string, recordList []datatypes.TimeRecord) {
 // hours and break time from the config file to calculate the overtime.
 // It returns the overtime in minutes as an integer.
 func CalcOvertime(workStart string, workEnd string) int {
-	config := datatypes.LoadConfig("config.json")
+	config, _ := datatypes.LoadConfig("config.json")
 	startHour, _ := strconv.Atoi(strings.Split(workStart, ":")[0])
 	startMinute, _ := strconv.Atoi(strings.Split(workStart, ":")[1])
 	endHour, _ := strconv.Atoi(strings.Split(workEnd, ":")[0])
 	endMinute, _ := strconv.Atoi(strings.Split(workEnd, ":")[1])
 	return (endHour*60 + endMinute) - (startHour*60 + startMinute) - (config.DefaultWorkingHours * 60) - (config.BreakTime)
+}
+
+func LastRecordIsOpen(recordList []datatypes.TimeRecord) bool {
+	if len(recordList) == 0 {
+		return false
+	}
+	lastRecord := recordList[len(recordList)-1]
+	return lastRecord.WorkEnd == ""
 }

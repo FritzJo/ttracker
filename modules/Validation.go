@@ -15,7 +15,7 @@ import (
 // The function returns an error if the file is not valid, and nil if it is valid.
 func ValidateCSVFile(filepath string) error {
 	// Load the configuration file
-	config := datatypes.LoadConfig("config.json")
+	config, _ := datatypes.LoadConfig("config.json")
 
 	// Open the CSV file
 	file, err := os.Open(filepath)

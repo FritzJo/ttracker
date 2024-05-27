@@ -58,15 +58,17 @@ func TestClockInWithOptionalParameter(t *testing.T) {
 func TestClockOut(t *testing.T) {
 	// Create a TimeRecord to use as input for ClockOut
 	inputRecord := datatypes.TimeRecord{
-		RecordType: "R",
-		Date:       time.Now(),
-		WorkStart:  "09:00",
-		WorkEnd:    "",
+		RecordType:      "R",
+		Date:            time.Now(),
+		WorkStart:       "09:00",
+		WorkEnd:         "",
+		MinutesOvertime: 0,
 	}
 	// Call ClockOut and get the output TimeRecord
 	outputRecord := modules.ClockOut(inputRecord)
 	// Verify that the outputRecord has the expected WorkEnd value
 	expectedEnd := time.Now().Format("15:04")
+
 	if outputRecord.WorkEnd != expectedEnd {
 		t.Errorf("Expected WorkEnd to be '%s', but got '%s'", expectedEnd, outputRecord.WorkEnd)
 	}
