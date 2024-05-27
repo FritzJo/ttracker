@@ -18,27 +18,23 @@ func main() {
 	recordFileName := strconv.Itoa(time.Now().Year()) + "_data.csv"
 	recordList := modules.ReadRecords(recordFileName)
 
+	currentTime := modules.GetCurrentTime()
+	if len(os.Args) > 2 {
+		currentTime = os.Args[2]
+	}
 	// Check for empty file
 	if len(recordList) >= 1 || os.Args[1] == "in" {
 		switch os.Args[1] {
 		case "in":
-			recordList = In(recordList, os.Args)
+			recordList = In(recordList, currentTime)
 		case "out":
-			recordList = Out(recordList, os.Args)
+			recordList = Out(recordList, currentTime)
 		case "status":
-			result := Status(recordList)
-			fmt.Println(result)
+			fmt.Println(Status(recordList))
 		case "summary":
-			recordList = Summary(recordList)
+			Summary(recordList)
 		case "take":
 			recordList = Take(recordList)
-		case "validate":
-			err := modules.ValidateCSVFile(recordFileName)
-			if err == nil {
-				fmt.Println("OK!")
-			} else {
-				fmt.Println(err)
-			}
 		}
 	} else {
 		fmt.Println("Not enough data available for this command. Please clock in at least once.")
@@ -47,28 +43,19 @@ func main() {
 	modules.WriteRecords(recordFileName, recordList)
 }
 
-func In(recordList []datatypes.TimeRecord, args []string) []datatypes.TimeRecord {
-	var rec datatypes.TimeRecord
-
-	if len(args) > 2 {
-		rec = modules.ClockIn(args[2])
-	} else {
-		rec = modules.ClockIn()
-	}
+func In(recordList []datatypes.TimeRecord, currentTime string) []datatypes.TimeRecord {
+	rec := modules.ClockIn(currentTime)
 	fmt.Printf("Clocking in at %s\n", rec.WorkStart)
 	recordList = append(recordList, rec)
 	return recordList
 }
 
-func Out(recordList []datatypes.TimeRecord, args []string) []datatypes.TimeRecord {
+func Out(recordList []datatypes.TimeRecord, currentTime string) []datatypes.TimeRecord {
 	if modules.LastRecordIsOpen(recordList) {
 		lastIndex := len(recordList) - 1
 		// TODO: This doesn't check for record type R yet!
-		if len(args) > 2 {
-			recordList[lastIndex].WorkEnd = args[2]
-		} else {
-			recordList[lastIndex].WorkEnd = time.Now().Format("15:04")
-		}
+		recordList[lastIndex].WorkEnd = currentTime
+		recordList[lastIndex].MinutesOvertime = modules.CalcOvertime(recordList[lastIndex].WorkStart, recordList[lastIndex].WorkEnd)
 		fmt.Printf("Clocking out at %s\n", recordList[lastIndex].WorkEnd)
 		fmt.Println("Today's overtime: " + strconv.Itoa(recordList[lastIndex].MinutesOvertime))
 	} else {
@@ -78,7 +65,7 @@ func Out(recordList []datatypes.TimeRecord, args []string) []datatypes.TimeRecor
 	return recordList
 }
 
-func Summary(recordList []datatypes.TimeRecord) []datatypes.TimeRecord {
+func Summary(recordList []datatypes.TimeRecord) {
 	fmt.Println("Creating summary")
 
 	config, _ := datatypes.LoadConfig("config.json")
@@ -92,7 +79,6 @@ func Summary(recordList []datatypes.TimeRecord) []datatypes.TimeRecord {
 	}
 
 	fmt.Println("\n=> " + strconv.Itoa(currentOvertimeAmount) + " min")
-	return recordList
 }
 
 func Take(recordList []datatypes.TimeRecord) []datatypes.TimeRecord {

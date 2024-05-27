@@ -111,3 +111,8 @@ func LastRecordIsOpen(recordList []datatypes.TimeRecord) bool {
 	lastRecord := recordList[len(recordList)-1]
 	return lastRecord.WorkEnd == ""
 }
+
+func GetCurrentTime() string {
+	hours, minutes, _ := time.Now().Clock()
+	return fmt.Sprintf("%02d:%02d", hours, minutes)
+}

@@ -25,16 +25,3 @@ func ClockIn(workStart ...string) datatypes.TimeRecord {
 	newRecord.MinutesOvertime = 0
 	return newRecord
 }
-
-// ClockOut updates the provided TimeRecord with a work end time of either the provided time or the current time (if not provided),
-// calculates the minutes of overtime worked, and returns the updated TimeRecord.
-func ClockOut(openRecord datatypes.TimeRecord, workEnd ...string) datatypes.TimeRecord {
-	if len(workEnd) > 0 && workEnd[0] != "" {
-		openRecord.WorkEnd = workEnd[0]
-	} else {
-		hours, minutes, _ := time.Now().Clock()
-		openRecord.WorkEnd = fmt.Sprintf("%02d:%02d", hours, minutes)
-	}
-	openRecord.MinutesOvertime = CalcOvertime(openRecord.WorkStart, openRecord.WorkEnd)
-	return openRecord
-}
