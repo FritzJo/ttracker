@@ -36,14 +36,14 @@ func LoadConfig(configPath string) Configuration {
 func SaveConfig(configPath string, conf Configuration) error {
 	file, err := os.Create(configPath)
 	if err != nil {
-		return fmt.Errorf("Error, couldn't create configuration file: %v", err)
+		return fmt.Errorf("error, couldn't create configuration file: %v", err)
 	}
 	defer file.Close()
 
 	encoder := json.NewEncoder(file)
 	err = encoder.Encode(conf)
 	if err != nil {
-		return fmt.Errorf("Error, couldn't encode configuration: %v", err)
+		return fmt.Errorf("error, couldn't encode configuration: %v", err)
 	}
 
 	return nil

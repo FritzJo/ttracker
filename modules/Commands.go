@@ -10,16 +10,17 @@ import (
 // In function is used to clock in a new time record with the current time.
 // If an argument is provided, it will be used as the work start time for the new record.
 func In(recordList []TimeRecord, args []string) []TimeRecord {
-	message := fmt.Sprintf("Clocking in (%s)", time.Now().Format("15:04"))
-	fmt.Println(message)
-
+	message := ""
 	if len(args) > 2 {
 		rec := ClockIn(args[2])
 		recordList = append(recordList, rec)
+		message = fmt.Sprintf("Clocking in (%s)", args[2])
 	} else {
 		rec := ClockIn()
 		recordList = append(recordList, rec)
+		message = fmt.Sprintf("Clocking in (%s)", time.Now().Format("15:04"))
 	}
+	fmt.Println(message)
 	return recordList
 }
 
@@ -33,8 +34,7 @@ func In(recordList []TimeRecord, args []string) []TimeRecord {
 // The input recordList, with a new TimeRecord appended if the user was clocked out successfully.
 func Out(recordList []TimeRecord, args []string) []TimeRecord {
 	// Print a message indicating that the user is clocking out
-	message := fmt.Sprintf("Clocking out (%s)", time.Now().Format("15:04"))
-	fmt.Println(message)
+	message := ""
 
 	// Get the last time record from the list
 	lastRecord := recordList[len(recordList)-1]
@@ -47,11 +47,14 @@ func Out(recordList []TimeRecord, args []string) []TimeRecord {
 		if len(args) > 2 {
 			rec := ClockOut(lastRecord, args[2])
 			recordList = append(recordList, rec)
+			message = fmt.Sprintf("Clocking out (%s)", args[2])
 		} else {
 			rec := ClockOut(lastRecord)
 			recordList = append(recordList, rec)
+			message = fmt.Sprintf("Clocking out (%s)", time.Now().Format("15:04"))
 		}
 
+		fmt.Println(message)
 		// Print the number of overtime minutes worked during the day
 		fmt.Println("Today's overtime: " + strconv.Itoa(recordList[len(recordList)-1].MinutesOvertime))
 	} else {
