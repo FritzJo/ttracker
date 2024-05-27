@@ -5,10 +5,12 @@ import (
 	"time"
 
 	"github.com/FritzJo/ttracker/modules"
+	"github.com/FritzJo/ttracker/modules/datatypes"
 )
 
 func TestClockIn(t *testing.T) {
-	tr := modules.ClockIn()
+	currentTime := modules.GetCurrentTime()
+	tr := datatypes.CreateNewTimeRecord(currentTime)
 	// Verify the returned TimeRecord has the correct RecordType
 	if tr.RecordType != "R" {
 		t.Errorf("Expected RecordType to be 'R', but got '%s'", tr.RecordType)
@@ -19,7 +21,7 @@ func TestClockIn(t *testing.T) {
 		t.Errorf("Expected Date to be '%s', but got '%s'", expectedDate, tr.Date.Format("2006-01-02"))
 	}
 	// Verify the returned TimeRecord has the correct WorkStart time
-	expectedStart := time.Now().Format("15:04")
+	expectedStart := currentTime
 	if tr.WorkStart != expectedStart {
 		t.Errorf("Expected WorkStart to be '%s', but got '%s'", expectedStart, tr.WorkStart)
 	}
@@ -35,7 +37,7 @@ func TestClockIn(t *testing.T) {
 func TestClockInWithOptionalParameter(t *testing.T) {
 	// Clock in with a specific work start time
 	workStart := "10:00"
-	record := modules.ClockIn(workStart)
+	record := datatypes.CreateNewTimeRecord(workStart)
 	// Check that the record has the correct values
 	if record.RecordType != "R" {
 		t.Errorf("Expected RecordType to be 'R', but got '%s'", record.RecordType)
